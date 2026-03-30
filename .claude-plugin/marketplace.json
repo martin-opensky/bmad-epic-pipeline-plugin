@@ -1,0 +1,13 @@
+{
+  "name": "bmad-epic-pipeline",
+  "owner": {
+    "name": "martinopensky"
+  },
+  "plugins": [
+    {
+      "name": "bmad-epic-pipeline",
+      "source": ".",
+      "description": "Four-stage BMAD epic orchestration: stories, dev, feedback, push"
+    }
+  ]
+}

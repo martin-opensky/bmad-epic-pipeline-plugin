@@ -1,0 +1,11 @@
+{
+  "name": "bmad-epic-pipeline",
+  "description": "Four-stage BMAD epic orchestration: stories, dev, feedback, push",
+  "version": "1.0.0",
+  "author": {
+    "name": "martinopensky"
+  },
+  "repository": "https://github.com/martin-opensky/bmad-epic-pipeline-plugin",
+  "license": "MIT",
+  "keywords": ["bmad", "epic", "pipeline", "stories", "dev", "feedback", "push"]
+}
