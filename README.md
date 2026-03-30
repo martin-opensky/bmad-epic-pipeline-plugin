@@ -81,14 +81,30 @@ rm -rf ~/.claude/skills/epic-feedback
 rm -rf ~/.claude/skills/epic-push
 ```
 
-## Prerequisites
+## Required Anthropic Plugins
+
+The **epic-push** skill depends on two official Anthropic plugins for code simplification and code review. Install them first:
+
+```
+/plugin marketplace add github:anthropics/claude-plugins-official
+/plugin install code-review@claude-plugins-official
+/plugin install code-simplifier@claude-plugins-official
+```
+
+These provide:
+
+| Plugin | Used By | Purpose |
+|--------|---------|---------|
+| [code-simplifier](https://github.com/anthropics/claude-plugins-official/tree/main/plugins/code-simplifier) | epic-push (Phase 2) | Simplifies and refines code for clarity, consistency, and maintainability |
+| [code-review](https://github.com/anthropics/claude-plugins-official/tree/main/plugins/code-review) | epic-push (Phase 4) | Multi-agent code review with confidence-scored findings posted as PR comments |
+
+## Other Prerequisites
 
 These skills orchestrate BMAD workflows and expect:
 
 - A BMAD-configured project with `_bmad/bmm/config.yaml`
 - Planning and implementation artifact directories as defined in the BMAD config
 - The `bmad-create-story`, `bmad-party-mode`, `bmad-dev-story`, and `bmad-code-review` skills available in the environment
-- The `code-simplifier` and `code-review` Claude Code plugins installed (used by epic-push)
 
 ## License
 
