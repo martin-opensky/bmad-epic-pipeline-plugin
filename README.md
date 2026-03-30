@@ -24,7 +24,7 @@ epic stories N → epic dev N → epic push N → epic feedback N
 ### Add the marketplace
 
 ```
-/plugin marketplace add github:martin-opensky/bmad-epic-pipeline-plugin
+/plugin marketplace add martin-opensky/bmad-epic-pipeline-plugin
 ```
 
 ### Install the plugin
@@ -86,7 +86,7 @@ rm -rf ~/.claude/skills/epic-push
 The **epic-push** skill depends on two official Anthropic plugins for code simplification and code review. Install them first:
 
 ```
-/plugin marketplace add github:anthropics/claude-plugins-official
+/plugin marketplace add anthropics/claude-plugins-official
 /plugin install code-review@claude-plugins-official
 /plugin install code-simplifier@claude-plugins-official
 ```
