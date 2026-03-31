@@ -70,17 +70,6 @@ After pulling changes to the repo:
 /plugin install bmad-epic-pipeline@bmad-epic-pipeline
 ```
 
-## Migration from Standalone Skills
-
-If you previously had these skills installed at `~/.claude/skills/epic-*`, both the standalone and plugin versions will be active simultaneously. To avoid duplicates, delete the standalone copies once you've verified the plugin works:
-
-```bash
-rm -rf ~/.claude/skills/epic-stories
-rm -rf ~/.claude/skills/epic-dev
-rm -rf ~/.claude/skills/epic-feedback
-rm -rf ~/.claude/skills/epic-push
-```
-
 ## Required Anthropic Plugins
 
 The **epic-push** skill depends on two official Anthropic plugins for code simplification and code review. Install them first:

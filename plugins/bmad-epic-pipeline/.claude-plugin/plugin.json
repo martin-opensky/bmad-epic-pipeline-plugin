@@ -1,7 +1,7 @@
 {
   "name": "bmad-epic-pipeline",
   "description": "Four-stage BMAD epic orchestration: stories, dev, feedback, push",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": {
     "name": "martin-opensky"
   },

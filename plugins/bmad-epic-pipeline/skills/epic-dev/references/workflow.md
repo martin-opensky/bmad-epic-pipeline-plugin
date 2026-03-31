@@ -224,7 +224,14 @@ curl http://localhost:8787/api/some/endpoint
 1. Update `{implementation_artifacts}/sprint-status.yaml`:
    - Mark the epic as `done`
 2. Update `references/bmad-current-status.md` with completion info.
-3. Present final summary:
+3. **Commit all changes** — stage and commit everything produced during this epic run:
+   - Run `git add -A`
+   - Build a commit message:
+     - First line: `epic {N}: {short summary of what was built}` (e.g., `epic 10: implement offline sync with queue and retry`)
+     - Body (optional, 2-4 bullets): list the key deliverables or stories completed
+   - Commit with that message
+   - Do **NOT** push — `epic push` handles that
+4. Present final summary:
 
 ```
 ## Epic {N} Complete
