@@ -17,6 +17,8 @@ If the relative path does not resolve, glob for `**/epic-push/references/workflo
 - **DO NOT** wait for user approval after presenting the pre-flight results — show them briefly, then execute immediately.
 - **ALWAYS** create a task list at the start showing all phases, and update it as you progress.
 - **ALWAYS** verify all tests pass before creating the PR.
+- **ALWAYS** lint and type-check the **entire codebase** before pushing — not just changed files. Fix all errors, including pre-existing ones. Zero lint/type errors is a hard gate.
+- **NEVER** push code that has lint or type errors — this is as important as passing tests.
 - **NEVER** skip the code review phase — it is the final quality gate.
 - **NEVER** merge the PR automatically — the human does the final merge.
 - **PR target defaults to `main`** unless the user explicitly specifies a different branch.

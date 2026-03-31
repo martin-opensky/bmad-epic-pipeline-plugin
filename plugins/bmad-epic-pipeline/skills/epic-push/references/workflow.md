@@ -5,12 +5,12 @@ Follow these phases sequentially. Each phase must complete before the next begin
 **Before starting**, create a task list to track progress:
 
 ```
-Phase 1: Pre-flight checks        — pending
-Phase 2: Code simplification      — pending
-Phase 3: Create PR                — pending
-Phase 4: Code review              — pending
-Phase 5: Implement review fixes   — pending
-Phase 6: Final summary            — pending
+Phase 1: Pre-flight checks         — pending
+Phase 2: Code simplification       — pending
+Phase 3: Create PR                 — pending
+Phase 4: Code review               — pending
+Phase 5: Implement review fixes    — pending
+Phase 6: Final verification & push — pending
 ```
 
 Mark each phase as `in-progress` when starting and `done` when complete.
@@ -61,20 +61,27 @@ Mark each phase as `in-progress` when starting and `done` when complete.
 5. Run the full test suite — all tests must pass.
    - Run tests from the project root (e.g., `bun test` or the project's test command).
    - If tests use workspaces, run per-workspace: `bun test --filter apps/mobile`, `bun test --filter apps/api`, etc.
-6. Read `{implementation_artifacts}/sprint-status.yaml`:
+6. **Lint and type-check the entire codebase** — this is a hard gate, not just the changed files:
+   - Detect the project's lint and type-check commands from `package.json` scripts (e.g., `lint`, `typecheck`, `tsc`).
+   - Run them across all workspaces / the full project.
+   - If there are **any** lint or type errors — even pre-existing ones not introduced by this epic — **fix them all**.
+   - Re-run lint + type-check after fixes to confirm zero errors.
+   - Commit lint fixes separately: `git add -A && git commit -m "fix: resolve lint and type errors"`
+   - The codebase must be fully clean before proceeding.
+7. Read `{implementation_artifacts}/sprint-status.yaml`:
    - Verify all stories for this epic are `done`.
    - If any are not `done`, stop and report which stories are blocking.
-7. Determine PR target:
+8. Determine PR target:
    - **Default:** `main`
    - **Override:** If the user specifies a different branch (e.g., "PR to develop"), use that.
    - Detection: Check `git log --merges --oneline -10` to confirm the project's merge pattern.
-8. Get the list of all files changed during the epic:
+9. Get the list of all files changed during the epic:
    - `git diff {target}...HEAD --name-only`
    - Store this list for Phase 2.
-9. Brief status:
-   ```
-   Pre-flight passed. {count} stories done. Branch: {branch} → {target}. {count} files changed.
-   ```
+10. Brief status:
+    ```
+    Pre-flight passed. Tests passing. Lint clean. {count} stories done. Branch: {branch} → {target}. {count} files changed.
+    ```
 
 ---
 
@@ -98,12 +105,13 @@ Mark each phase as `in-progress` when starting and `done` when complete.
      ```
    - When the agent completes, report immediately
 4. Run the full test suite to confirm nothing broke.
-5. If tests fail, revert the problematic simplification and re-run tests.
-6. Commit simplification changes:
+5. Run lint + type-check to confirm simplification didn't introduce errors. Fix any issues found.
+6. If tests or lint fail, revert the problematic simplification and re-run.
+7. Commit simplification changes:
    ```
    git add -A && git commit -m "refactor: code simplification for epic {N}"
    ```
-7. **Save and output a summary of what was simplified:**
+8. **Save and output a summary of what was simplified:**
    - Save to: `{output_folder}/reviews/epic-{N}/simplification-{N}.md`
    - Output the same summary to the user:
    ```
@@ -195,27 +203,33 @@ The plugin posts its findings as **review comments directly on the PR**. These p
    - Implement the fix
    - If the fix is complex or the suggestion is wrong, use best judgment
 4. Run the full test suite after all fixes.
-5. Commit and push:
+5. Run lint + type-check. Fix any issues introduced by the review fixes. Re-run until clean.
+6. Commit fixes (do NOT push yet — Phase 6 is the final gate):
    ```
    git add -A && git commit -m "fix: address code review findings for epic {N}"
-   git push
    ```
-6. Brief status:
+7. Brief status:
    ```
-   {count} review findings fixed. Tests passing. Changes pushed.
+   {count} review findings fixed. Tests passing. Lint clean.
    ```
 
 ---
 
-## Phase 6: Final Summary
+## Phase 6: Final Verification & Push
 
-**Goal:** Verify everything is green and tell the user what to do next.
+**Goal:** One last check that everything is clean, then push.
 
 1. Run the full test suite one final time.
-2. Verify the PR is up to date with all commits pushed.
-3. Update `{implementation_artifacts}/sprint-status.yaml`:
+2. Run lint + type-check one final time across the entire codebase.
+3. If **anything** fails — tests or lint — fix it, commit, and re-run both until fully green. Do NOT proceed until both pass.
+4. Push all commits:
+   ```
+   git push
+   ```
+5. Verify the PR is up to date with all commits pushed.
+6. Update `{implementation_artifacts}/sprint-status.yaml`:
    - Mark the epic status as `pr-open`
-4. Present the final report:
+7. Present the final report:
 
 ```
 ## Epic {N} — PR Open
@@ -225,6 +239,7 @@ The plugin posts its findings as **review comments directly on the PR**. These p
 **Simplifications:** {count} applied
 **Review findings:** {count} fixed (threshold: 40)
 **Tests:** All passing
+**Lint:** Clean (zero errors)
 
 ### What to do now
 1. **Manually test** — use the test plan at `{implementation_artifacts}/epic-{N}-manual-test-plan.md`
